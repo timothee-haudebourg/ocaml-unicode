@@ -1,18 +1,13 @@
-module type ENCODING = sig
-  val name : string
-
-  val encode : UChar.t -> char list
-
-  val decode : char Seq.t -> UChar.t * char Seq.t
-end
-
 module type S = sig
-  module Encoding : ENCODING
+  module Encoding : Encoding.S
 
   type t = string
 
   val length : t -> int
   (** [length str] return the length of the string [str]. *)
+
+  val compare : t -> t -> int
+  (** [compare a b] compare the two strings [a] and [b]. *)
 
   val push : UChar.t -> t -> t
   (** [push c str] create a new string where [c] is added to the end of [str]. *)
@@ -21,8 +16,6 @@ module type S = sig
   (** [to_seq str] return [str] as a sequence of unicode characters. *)
 end
 
-module Encoded (E: ENCODING) : S with module Encoding = E
+module Encoded (E: Encoding.S) : S with module Encoding = E
 
-module UTF8 : ENCODING
-
-module Utf8String : S with module Encoding = UTF8
+module Utf8String : S with module Encoding = Encoding.UTF8

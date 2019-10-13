@@ -19,8 +19,9 @@ let is_alphabetic t =
   let c = Uchar.to_int t in
   (is_between c 0x41 0x5a) || (is_between c 0x61 0x7a) || (c > 0x7f && failwith "not implemented for non-ASCII chars.")
 
-let is_control _ =
-  failwith "not implemented."
+let is_control t =
+  let c = Uchar.to_int t in
+  (is_between c 0x00 0x1f) || (c = 0x7f) || (c > 0x7f && failwith "not implemented for non-ASCII chars.")
 
 let is_whitespace t =
   let c = Uchar.to_int t in
