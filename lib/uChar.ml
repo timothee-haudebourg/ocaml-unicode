@@ -19,6 +19,13 @@ let is_alphabetic t =
   let c = Uchar.to_int t in
   (is_between c 0x41 0x5a) || (is_between c 0x61 0x7a) || (c > 0x7f && failwith "not implemented for non-ASCII chars.")
 
+let is_numeric t =
+ let c = Uchar.to_int t in
+ (is_between c 0x30 0x39) || (c > 0x7f && failwith "not implemented for non-ASCII chars.")
+
+let is_alphanumeric t =
+  is_alphabetic t || is_numeric t
+
 let is_control t =
   let c = Uchar.to_int t in
   (is_between c 0x00 0x1f) || (c = 0x7f) || (c > 0x7f && failwith "not implemented for non-ASCII chars.")

@@ -6,6 +6,7 @@ module type S = sig
   val length : t -> int
   val compare : t -> t -> int
   val push : UChar.t -> t -> t
+  val fold_left : ('a -> UChar.t -> 'a) -> 'a -> t -> 'a
   val to_seq : t -> UChar.t Seq.t
 end
 
@@ -31,6 +32,9 @@ module Encoded (E: Encoding.S) = struct
 
   let to_seq str =
     EncodingBase.decode (module Encoding) (String.to_seq str)
+
+  let fold_left f accu str =
+    Seq.fold_left f accu (to_seq str)
 end
 
 module Utf8String = Encoded (Encoding.UTF8)

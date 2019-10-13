@@ -12,6 +12,9 @@ module type S = sig
   val push : UChar.t -> t -> t
   (** [push c str] create a new string where [c] is added to the end of [str]. *)
 
+  val fold_left : ('a -> UChar.t -> 'a) -> 'a -> t -> 'a
+  (** [fold_left f accu str] folds the string [str] from the left. *)
+
   val to_seq : t -> UChar.t Seq.t
   (** [to_seq str] return [str] as a sequence of unicode characters. *)
 end

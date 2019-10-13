@@ -16,6 +16,10 @@ val is_ascii : t -> bool
 val is_alphabetic : t -> bool
 (** [is_alphabetic c] return [true] if [c] is an alphabetic code point, and [false] if not. *)
 
+val is_numeric : t -> bool
+
+val is_alphanumeric : t -> bool
+
 val is_control : t -> bool
 (** [is_control c] return [true] if [c] is a control code point, and [false] if not. *)
 
