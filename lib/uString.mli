@@ -3,6 +3,9 @@ module type S = sig
 
   type t = string
 
+  val of_char : UChar.t -> t
+  (** Create a string out of a char. *)
+
   val length : t -> int
   (** [length str] return the length of the string [str]. *)
 
@@ -14,6 +17,9 @@ module type S = sig
 
   val fold_left : ('a -> UChar.t -> 'a) -> 'a -> t -> 'a
   (** [fold_left f accu str] folds the string [str] from the left. *)
+
+  val iter : (UChar.t -> unit) -> t -> unit
+  (** [iter f str] iterate the characters string [str] from the left. *)
 
   val to_seq : t -> UChar.t Seq.t
   (** [to_seq str] return [str] as a sequence of unicode characters. *)

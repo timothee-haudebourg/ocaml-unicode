@@ -20,8 +20,8 @@ let is_alphabetic t =
   (is_between c 0x41 0x5a) || (is_between c 0x61 0x7a) || (c > 0x7f && failwith "not implemented for non-ASCII chars.")
 
 let is_numeric t =
- let c = Uchar.to_int t in
- (is_between c 0x30 0x39) || (c > 0x7f && failwith "not implemented for non-ASCII chars.")
+  let c = Uchar.to_int t in
+  (is_between c 0x30 0x39) || (c > 0x7f && failwith "not implemented for non-ASCII chars.")
 
 let is_alphanumeric t =
   is_alphabetic t || is_numeric t
@@ -33,6 +33,20 @@ let is_control t =
 let is_whitespace t =
   let c = Uchar.to_int t in
   (c = 0x20) || (is_between c 0x09 0x0d) || (c > 0x7f && failwith "not implemented for non-ASCII chars.")
+
+let tab_length ?(tab_stop=8) col =
+  if tab_stop <= 0 then raise (Invalid_argument "tab stop length must be strictly positive");
+  if col < 0 then -col else
+    tab_stop - (col mod tab_stop)
+
+let width ?(tab_stop=8) col t =
+  let i = to_int t in
+  begin match i with
+    | 0x09 (* \t *) ->
+      col + (tab_length ~tab_stop col)
+    | _ when is_control t -> 0
+    | _ -> 1 (* TODO multi column chars are not handled yet. *)
+  end
 
 let to_ascii t =
   Uchar.to_char t

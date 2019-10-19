@@ -3,10 +3,12 @@ module type S = sig
 
   type t = string
 
+  val of_char : UChar.t -> t
   val length : t -> int
   val compare : t -> t -> int
   val push : UChar.t -> t -> t
   val fold_left : ('a -> UChar.t -> 'a) -> 'a -> t -> 'a
+  val iter : (UChar.t -> unit) -> t -> unit
   val to_seq : t -> UChar.t Seq.t
 end
 
@@ -16,6 +18,13 @@ module Encoded (E: Encoding.S) = struct
   module Encoding = E
 
   type t = string
+
+  let of_char c =
+    let bytes = Encoding.encode c in
+    let len = List.length bytes in
+    let buffer = Bytes.create len in
+    List.iteri (fun i byte -> Bytes.set buffer i byte) bytes;
+    Bytes.to_string buffer
 
   let length = String.length
 
@@ -35,6 +44,9 @@ module Encoded (E: Encoding.S) = struct
 
   let fold_left f accu str =
     Seq.fold_left f accu (to_seq str)
+
+  let iter f str =
+    fold_left (fun () c -> f c) () str
 end
 
 module Utf8String = Encoded (Encoding.UTF8)

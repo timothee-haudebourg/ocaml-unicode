@@ -29,6 +29,18 @@ val is_digit : int -> t -> bool
 val is_whitespace : t -> bool
 (** [is_space c] checks if [c] is a whitespace character. *)
 
+val tab_length : ?tab_stop:int -> int -> int
+(** Get the tab length at the given position. *)
+
+val width : ?tab_stop:int -> int -> t -> int
+(** [width ?tab_stop col c] return the number of columns needed to draw [c] when
+    it occurs at the column [col].
+    Control characters are of width 0.
+    The width of the tabulation character dependes on [col] and [tab_stop]:
+    it can be from 1 to [tab_stop].
+    This function raise an [Invalid_argument] if [tab_stop] is not strictly
+    positive. *)
+
 val to_ascii : t -> char
 (** [to_ascii c] try to convert the given character [c] into an ASCII [char]. *)
 
