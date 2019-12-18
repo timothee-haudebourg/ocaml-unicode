@@ -1,1 +1,0 @@
-(library (name Unicode) (public_name unicode))

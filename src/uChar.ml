@@ -11,6 +11,8 @@ let of_int = Uchar.of_int
 
 let to_int = Uchar.to_int
 
+let of_ascii = Uchar.of_char
+
 let is_ascii t =
   let c = Uchar.to_int t in
   is_between c 0x00 0xff

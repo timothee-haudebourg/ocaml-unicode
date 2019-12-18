@@ -4,20 +4,8 @@ synopsis: "Simple unicode library."
 description: "Code mapping and display to be used in parsers."
 maintainer: ["Timothée Haudebourg <timothee.haudebourg@irisa.fr>"]
 authors: ["Timothée Haudebourg <timothee.haudebourg@irisa.fr>"]
-depends: [
-  "dune" {>= "1.11"}
-]
+depends: []
 build: [
-  ["dune" "subst"] {pinned}
-  [
-    "dune"
-    "build"
-    "-p"
-    name
-    "-j"
-    jobs
-    "@install"
-    "@runtest" {with-test}
-    "@doc" {with-doc}
-  ]
+  [ make "-j" jobs ]
 ]
+install: [ make "install" ]

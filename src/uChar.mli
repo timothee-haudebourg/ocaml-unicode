@@ -10,6 +10,9 @@ val of_int : int -> t
 val to_int : t -> int
 (** [to_int c] return the integer scalar value of [c]. *)
 
+val of_ascii : char -> t
+(** [of_ascii] create a character from the given ascii char. *)
+
 val is_ascii : t -> bool
 (** [is_ascii c] return [true] is [c] is an ASCII character, and [false] if not. *)
 
